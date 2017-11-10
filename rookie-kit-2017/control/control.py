@@ -75,7 +75,7 @@ class Control(BaseControl):
         
         BaseControl.__init__(self, width, height)
         # used to control display of individual item information
-        self.show_info = False
+        self.show_info = True
         return
 
     def pregame_control(self, engine, keys, newkeys, buttons, newbuttons, mouse_position):
@@ -113,16 +113,16 @@ class Control(BaseControl):
         
         (mouse_x, mouse_y) = mouse_position
         
-        if pygame.K_UP in newkeys:
+        if pygame.K_w in newkeys:
             engine.set_player_direction(270)
             engine.set_missile_direction(270)
-        elif pygame.K_DOWN in newkeys:
+        elif pygame.K_s in newkeys:
             engine.set_player_direction(90)
             engine.set_missile_direction(90)
-        elif pygame.K_LEFT in newkeys:
+        elif pygame.K_a in newkeys:
             engine.set_player_direction(180)
             engine.set_missile_direction(180)
-        elif pygame.K_RIGHT in newkeys:
+        elif pygame.K_d in newkeys:
             engine.set_player_direction(0)
             engine.set_missile_direction(0)
 
@@ -131,21 +131,21 @@ class Control(BaseControl):
         elif pygame.K_2 in newkeys:
             engine.set_player_speed_slow()
             
-        if pygame.K_q in newkeys:
+        if pygame.K_u in newkeys:
             engine.set_missile_range_none()
-        elif pygame.K_w in newkeys:
+        elif pygame.K_i in newkeys:
             engine.set_missile_range_short()
 
-        if pygame.K_a in newkeys:
+        if pygame.K_j in newkeys:
             engine.set_missile_power_none()
-        elif pygame.K_s in newkeys:
+        elif pygame.K_k in newkeys:
             engine.set_missile_power_low()
                 
         if pygame.K_SPACE in newkeys:
             engine.fire_missile()
 
-        if pygame.K_i in newkeys:
-            self.show_info = not self.show_info
+        """if pygame.K_i in newkeys:
+            self.show_info = not self.show_info"""
 
         return
         
