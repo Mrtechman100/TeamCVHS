@@ -7,6 +7,8 @@ import pygame
 from config import *
 from tps.common.event import *
 from tps.client.base_display import BaseDisplay
+import os
+
 
 class Display(BaseDisplay):
     """
@@ -86,6 +88,33 @@ class Display(BaseDisplay):
         """
         BaseDisplay.__init__(self, width, height)
 
+        file_path = os.path.join('img', 'Title.png')
+        self.titleimg = pygame.image.load(file_path)
+
+        file_path = os.path.join('img', 'wall.png')
+        self.wall = pygame.image.load(file_path)
+
+        file_path = os.path.join('img', 'loading.png')
+        self.loading = pygame.image.load(file_path)
+
+        file_path = os.path.join('img', 'dollar.png')
+        self.dollar = pygame.image.load(file_path)
+
+        file_path = os.path.join('img', 'kim.png')
+        self.kim = pygame.image.load(file_path)
+
+        file_path = os.path.join('img', 'background.png')
+        self.background = pygame.image.load(file_path)
+
+        file_path = os.path.join('img', 'trump.png')
+        self.trump = pygame.image.load(file_path)
+
+        file_path = os.path.join('img', 'bottle.png')
+        self.bottle = pygame.image.load(file_path)
+
+        file_path = os.path.join('img', 'egl.png')
+        self.egl = pygame.image.load(file_path)
+        
         # There are other fonts available, but they are not
         # the same on every computer.  You can read more about
         # fonts at http://www.pygame.org/docs/ref/font.html
@@ -111,17 +140,13 @@ class Display(BaseDisplay):
         Draws the display before the user selects the game type.
         """
         # background
+        file_path = os.path.join('img', 'Title.png')
+        image = pygame.image.load(file_path)
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.fill(self.background_color, rect)
+        surface.blit(self.titleimg, rect)
         # text message in center of screen
-        s = "Press 'd' for dual player, 's' for single player,"
-        self.draw_text_center(surface, s, self.text_color,
-                              self.width/2, self.height/2,
-                              self.font)
-        s = "'t' for tournament, 'esc' to quit."
-        self.draw_text_center(surface, s, self.text_color,
-                              self.width/2, self.height/2 + 3*self.font_size/2,
-                              self.font)
+        
         return
         
     def paint_waiting_for_game(self, surface, engine, control):
@@ -131,13 +156,12 @@ class Display(BaseDisplay):
         to join the game.
         """
         # background
+        file_path = os.path.join('img', 'loading.png')
+        image = pygame.image.load(file_path)
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.fill(self.background_color, rect)
-        # text message in center of screen
-        s = "Waiting for opponent to connect."
-        self.draw_text_center(surface, s, self.text_color,
-                              self.width/2, self.height/2,
-                              self.font)
+        surface.blit(self.loading, rect)
+        
         return
 
     def paint_game(self, surface, engine, control):
@@ -145,8 +169,11 @@ class Display(BaseDisplay):
         Draws the display after the game starts.
         """
         # background
+        file_path = os.path.join('img', 'background.png')
+        image = pygame.image.load(file_path)
         rect = pygame.Rect(0, 0, self.width, self.height)
         surface.fill(self.background_color, rect)
+        surface.blit(self.background, rect)
             
         # draw each object
         objs = engine.get_objects()
@@ -197,7 +224,10 @@ class Display(BaseDisplay):
         Draws walls.
         """
         rect = self.obj_to_rect(obj)
-        pygame.draw.rect(surface, self.wall_color, rect)
+        file_path = os.path.join('img', 'wall.png')
+        image = pygame.image.load(file_path)
+        rect = self.obj_to_rect(obj)
+        surface.blit(self.wall, rect)
         return
         
     def paint_npc(self, surface, engine, control, obj):
@@ -205,9 +235,11 @@ class Display(BaseDisplay):
         Draws living NPCs.
         """
         if obj.is_alive():
-            color = self.npc_color
             rect = self.obj_to_rect(obj)
-            pygame.draw.rect(surface, color, rect)
+            file_path = os.path.join('img', 'dollar.png')
+            image = pygame.image.load(file_path)
+            rect = self.obj_to_rect(obj)
+            surface.blit(self.dollar, rect)
         return
         
     def paint_missile(self, surface, engine, control, obj):
@@ -215,9 +247,19 @@ class Display(BaseDisplay):
         Draws living missiles.
         """
         if obj.is_alive():
-            color = self.missile_color
             rect = self.obj_to_rect(obj)
-            pygame.draw.rect(surface, color, rect)
+            if obj.get_player_oid() == engine.get_player_oid():
+                color = self.player_color
+                file_path = os.path.join('img', 'egl.png')
+                image = pygame.image.load(file_path)
+                rect = self.obj_to_rect(obj)
+                surface.blit(self.egl, rect)
+            else:
+                color = self.opponent_color
+                file_path = os.path.join('img', 'bottle.png')
+                image = pygame.image.load(file_path)
+                rect = self.obj_to_rect(obj)
+                surface.blit(self.bottle, rect)
         return
         
     def paint_player(self, surface, engine, control, obj):
@@ -229,9 +271,16 @@ class Display(BaseDisplay):
             rect = self.obj_to_rect(obj)
             if obj.get_oid() == engine.get_player_oid():
                 color = self.player_color
+                file_path = os.path.join('img', 'trump.png')
+                image = pygame.image.load(file_path)
+                rect = self.obj_to_rect(obj)
+                surface.blit(self.trump, rect)
             else:
                 color = self.opponent_color
-            pygame.draw.rect(surface, color, rect)
+                file_path = os.path.join('img', 'kim.png')
+                image = pygame.image.load(file_path)
+                rect = self.obj_to_rect(obj)
+                surface.blit(self.kim, rect)
         return
 
     def paint_game_status(self, surface, engine, control):
