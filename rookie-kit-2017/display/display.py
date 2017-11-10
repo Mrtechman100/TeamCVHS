@@ -86,6 +86,11 @@ class Display(BaseDisplay):
         Configure display-wide settings and one-time
         setup work here.
         """
+        pygame.mixer.init()
+        pygame.mixer.music.load('sounds\Lit.ogg')
+        pygame.mixer.music.play(-1)
+        self.hugesound = pygame.mixer.Sound('sounds\Fire.wav')
+        self.firesound = pygame.mixer.Sound('sounds\Huge.wav')
         BaseDisplay.__init__(self, width, height)
 
         file_path = os.path.join('img', 'Title.png')
@@ -212,6 +217,10 @@ class Display(BaseDisplay):
         """
         Should process the event and decide if it needs to be displayed, or heard.
         """
+        if event.get_kind()==E_MISSILE_FIRE:
+            self.hugesound.play()
+        if event.get_kind()==E_MISSILE_HIT:
+            self.firesound.play()
         return
 
     # The following methods draw appropriate rectangles
