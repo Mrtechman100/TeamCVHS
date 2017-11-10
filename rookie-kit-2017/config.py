@@ -8,7 +8,7 @@ from tps.engine_server.config import *
 # Configure this to put a title in the top of your window
 DEFAULT_GAME_TITLE = "Fire and Fury: Revenge of Rocketman"
 # Configure this to use your name during games with others
-DEFAULT_TEAM_NAME  = "Rocket Man"
+DEFAULT_TEAM_NAME  = "Trump"
 
 # This is the number of times to check for input and redraw
 # the screen every second.  If your computer is slow, then
