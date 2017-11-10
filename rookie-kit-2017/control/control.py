@@ -126,9 +126,9 @@ class Control(BaseControl):
             engine.set_player_direction(0)
             engine.set_missile_direction(0)
 
-        if pygame.K_1 in newkeys:
+        if pygame.K_q in newkeys:
             engine.set_player_speed_stop()
-        elif pygame.K_2 in newkeys:
+        elif pygame.K_e in newkeys:
             engine.set_player_speed_slow()
             
         if pygame.K_u in newkeys:
