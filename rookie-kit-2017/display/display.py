@@ -89,8 +89,9 @@ class Display(BaseDisplay):
         pygame.mixer.init()
         pygame.mixer.music.load('sounds\Lit.ogg')
         pygame.mixer.music.play(-1)
-        self.hugesound = pygame.mixer.Sound('sounds\Fire.wav')
-        self.firesound = pygame.mixer.Sound('sounds\Huge.wav')
+        self.hugesound = pygame.mixer.Sound('sounds\Fire2.wav')
+        self.boomsound = pygame.mixer.Sound('sounds\Shotgun.wav')
+        self.kimsound = pygame.mixer.Sound('sounds\Kim2.wav')
         BaseDisplay.__init__(self, width, height)
 
         file_path = os.path.join('img', 'Title.png')
@@ -218,9 +219,12 @@ class Display(BaseDisplay):
         Should process the event and decide if it needs to be displayed, or heard.
         """
         if event.get_kind()==E_MISSILE_FIRE:
-            self.hugesound.play()
+            if event.get_player_oid()==engine.get_player_oid():
+                self.hugesound.play()
+            else:
+                self.kimsound.play()
         if event.get_kind()==E_MISSILE_HIT:
-            self.firesound.play()
+            self.boomsound.play()
         return
 
     # The following methods draw appropriate rectangles
